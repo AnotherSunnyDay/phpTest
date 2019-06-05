@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/contact', 'ContactController@index');
-Route::post('/contact', 'ContactController@create');
+// Route::get('/contact', 'ContactController@index');
+// Route::post('/contact', 'ContactController@create');
 
 Route::get('/contact/complete', function () {
     return view('contact.complete');

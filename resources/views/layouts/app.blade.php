@@ -11,11 +11,12 @@
 </head>
 <body>
     
-    @include("inc.navbar")
+    {{-- @include("inc.navbar") --}}
 
     <div class="container" id="app">
         @include("inc.messages")
-        @yield("content")
+        {{-- @yield("content") --}}
+        <formv></formv>
     </div>
 
 

@@ -26,6 +26,6 @@ class ContactController extends Controller
         $message->save();
 
         //Redirect
-        return redirect('/contact/complete')->with('success', 'Message Sent');
+        // return ('success', 'Message Sent');
     }
 }
