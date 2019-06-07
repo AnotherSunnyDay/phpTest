@@ -26,12 +26,12 @@
         </div>
 
         <form action="/" method="post" class='theForm'>
-            <p v-if="errors.length" class='errors'>
-                <b>Error:</b>
                 <ul>
-                    <li v-for="error in errors">{{ error }}</li>
+                    <!-- <li v-for="error in errors">{{ error }}</li> -->
+                    <li v-if="errors.name" class='alert alert-danger'>{{errors.name}}</li>
+                    <li v-if="errors.email" class='alert alert-danger'>{{errors.email}}</li>
+                    <li v-if="errors.message" class='alert alert-danger'>{{errors.message}}</li>
                 </ul>
-            </p>
 
             <div class="form-group">
                 <label for="name">Name</label>
@@ -64,7 +64,11 @@
         },
         data:function(){
             return{
-                errors: [],
+                errors: {
+                    name: '',
+                    email:'',
+                    message:''
+                },
                 contact:{
                     name: '',
                     email:'',
@@ -78,18 +82,15 @@
                 $('.index').hide();
                 $('.completed').hide();
                 $('.theForm').show();
-                $(".errors").empty();
             },
             showHome: function(){
                 $('.completed').hide();
                 $('.theForm').hide();
                 $('.index').show();
-                $(".errors").empty();
             },
             save: function(e){
                 e.preventDefault();
                 if(this.contact.name && this.contact.email && this.contact.message){
-                    $(".errors").empty();
                     let self = this;
                     let params = Object.assign({}, self.contact);
                     axios.post('/api/contact/store', params)
@@ -108,20 +109,21 @@
                             console.log(error)
                         });
                 }
-                $(".errors").empty();
-                this.errors = [];
-                if (!this.name){
-                    this.errors.push("Name required")
-                }
-                if (!this.message){
-                    this.errors.push('Message required.');
-                }
-                if (!this.email){
-                    this.errors.push('Email required.');
+                if (!this.contact.name){
+                    this.errors.name = "Name required"
                 } 
-                else if (!this.validateEmail(this.email)){
-                    this.errors.push('Valid email required.');
-                };
+                else { this.errors.name = ""}
+                if (!this.contact.message){
+                    this.errors.message = "Message required"
+                } 
+                else { this.errors.message = ""}
+                if (!this.contact.email){
+                    this.errors.email = "Email required"
+                } 
+                else if (!this.validateEmail(this.contact.email)){
+                    this.errors.email='Valid email required.';
+                }
+                else { this.errors.email = ""}
                     
             },
 
